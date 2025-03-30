@@ -177,6 +177,6 @@ pyrightconfig.json
 load_git.bat
 
 # dbt profile
-.datawarehouse/profiles.yml
+datawarehouse/profiles.yml
 
 # End of https://www.toptal.com/developers/gitignore/api/python
