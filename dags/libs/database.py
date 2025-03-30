@@ -46,7 +46,6 @@ def create_postgres_engine(database: str = None) -> Engine:
         url = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}"
         engine = create_engine(url)
 
-        print("Successfully connected to the database")
         return engine
     except SQLAlchemyError as e:
         print(f"Error connecting to database: {e}")

@@ -176,4 +176,7 @@ pyrightconfig.json
 # git diff
 load_git.bat
 
+# dbt profile
+profiles.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/python

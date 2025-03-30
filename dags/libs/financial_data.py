@@ -7,7 +7,6 @@ the Brazilian Central Bank's SGS system (Sistema Gerenciador de Séries Temporai
 """
 
 from datetime import date, datetime, timedelta
-from typing import Dict
 
 import pandas as pd
 import requests
@@ -18,7 +17,7 @@ from dateutil.relativedelta import relativedelta
 MAX_SGS_YEARS_RANGE = 10
 
 
-def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> Dict:
+def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> str:
     """
     Fetch financial data from Yahoo Finance for a given stock code and date range.
 
@@ -28,7 +27,7 @@ def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> Dict:
         date_end (date): End date for data retrieval.
 
     Returns:
-        Dict: JSON-compatible dictionary containing the requested financial data.
+        str: JSON-compatible containing the requested financial data.
 
     Raises:
         ValueError: If date_init is after date_end
@@ -52,7 +51,7 @@ def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> Dict:
         df["date"] = df["Date"].dt.strftime("%Y-%m-%d")
         df["ticker"] = code
         df["source"] = "Yahoo Finance"
-        df["extracted_date"] = datetime.now()
+        df["extracted_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Calculate daily returns
         df["close"] = df["Close"].pct_change()
@@ -61,13 +60,13 @@ def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> Dict:
         result_df = df[["date", "close", "ticker", "source", "extracted_date"]].copy()
 
         # Convert DataFrame to JSON-compatible dictionary
-        return result_df.to_dict(orient="records")
+        return result_df.to_json(orient="records", date_format="iso")
 
     except Exception as e:
         raise RuntimeError(f"Failed to fetch data from Yahoo Finance: {str(e)}")
 
 
-def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
+def get_sgs_data(code: str, date_init: date, date_end: date) -> str:
     """
     Fetch time series data from Brazilian Central Bank's SGS system.
 
@@ -80,7 +79,7 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
         date_end (date): End date for data retrieval.
 
     Returns:
-        Dict: JSON-compatible dictionary containing the requested time series data.
+        str: JSON-compatible containing the requested time series data.
 
     Raises:
         ValueError: If invalid dates are provided.
@@ -147,12 +146,12 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
 
         # Process and standardize the data
         full_df["ticker"] = code
-        full_df["source"] = "Brazilian Central Bank"
-        full_df["extracted_date"] = datetime.now()
+        full_df["source"] = "SGS"
+        full_df["extracted_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Convert to dictionary/JSON format
-        result = full_df[["date", "close", "ticker", "source", "extracted_date"]].to_dict(
-            orient="records"
+        result = full_df[["date", "close", "ticker", "source", "extracted_date"]].to_json(
+            orient="records", date_format="iso"
         )
 
         return result
@@ -165,7 +164,7 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
         raise RuntimeError(f"Unexpected error while fetching SGS data: {str(e)}")
 
 
-def get_sgs_last_data(code: str) -> Dict:
+def get_sgs_last_data(code: str) -> str:
     """
     Fetch the most recent data point for a given SGS series code.
 
@@ -173,7 +172,7 @@ def get_sgs_last_data(code: str) -> Dict:
         code (str): The SGS series code (e.g., '12' for CDI).
 
     Returns:
-        Dict: JSON-compatible dictionary containing the most recent data point.
+        str: JSON-compatible containing the most recent data point.
 
     Raises:
         RuntimeError: If data cannot be fetched from the SGS API.
@@ -201,10 +200,12 @@ def get_sgs_last_data(code: str) -> Dict:
         df["date"] = pd.to_datetime(df["data"], format="%d/%m/%Y")
         df["Close"] = pd.to_numeric(df["valor"], errors="coerce")
         df["ticker"] = code
-        df["source"] = "Brazilian Central Bank"
-        df["extracted_date"] = datetime.now()
+        df["source"] = "SGS"
+        df["extracted_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        return df[["date", "Close", "ticker", "source", "extracted_date"]].to_dict(orient="records")
+        return df[["date", "Close", "ticker", "source", "extracted_date"]].to_json(
+            orient="records", date_format="iso"
+        )
 
     except requests.exceptions.RequestException as e:
         raise RuntimeError(f"API request error: {str(e)}")
@@ -212,7 +213,7 @@ def get_sgs_last_data(code: str) -> Dict:
         raise RuntimeError(f"Unexpected error while fetching last SGS data: {str(e)}")
 
 
-def get_yahoo_finance_historical_data(code: str) -> Dict:
+def get_yahoo_finance_historical_data(code: str) -> str:
     """
     Fetch complete historical data for a given ticker from Yahoo Finance.
 
@@ -220,7 +221,7 @@ def get_yahoo_finance_historical_data(code: str) -> Dict:
         code (str): The ticker symbol.
 
     Returns:
-        Dict: JSON-compatible dictionary containing all available historical data.
+        str: JSON-compatible containing all available historical data.
 
     Raises:
         RuntimeError: If data cannot be fetched from Yahoo Finance.
@@ -239,16 +240,16 @@ def get_yahoo_finance_historical_data(code: str) -> Dict:
         df["date"] = df["Date"].dt.strftime("%Y-%m-%d")
         df["ticker"] = code
         df["source"] = "Yahoo Finance"
-        df["extracted_date"] = datetime.now()
+        df["extracted_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Calculate daily returns
         df["close"] = df["Close"].pct_change()
 
         # Select only the required columns
-        result_df = df[["date", "Close", "ticker", "source", "extracted_date"]].copy()
+        result_df = df[["date", "close", "ticker", "source", "extracted_date"]].copy()
 
         # Convert DataFrame to JSON-compatible dictionary
-        return result_df.to_dict(orient="records")
+        return result_df.to_json(orient="records", date_format="iso")
 
     except Exception as e:
         raise RuntimeError(f"Failed to fetch historical data from Yahoo Finance: {str(e)}")
