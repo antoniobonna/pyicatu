@@ -23,7 +23,7 @@ def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> Dict:
     Fetch financial data from Yahoo Finance for a given stock code and date range.
 
     Args:
-        code (str): The ticker symbol (e.g., 'AAPL', 'PETR4.SA').
+        code (str): The ticker symbol (e.g., '^BVSP').
         date_init (date): Start date for data retrieval.
         date_end (date): End date for data retrieval.
 
@@ -54,8 +54,11 @@ def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> Dict:
         df["source"] = "Yahoo Finance"
         df["extracted_date"] = datetime.now()
 
+        # Calculate daily returns
+        df["close"] = df["Close"].pct_change()
+
         # Select only the required columns
-        result_df = df[["date", "Close", "ticker", "source", "extracted_date"]].copy()
+        result_df = df[["date", "close", "ticker", "source", "extracted_date"]].copy()
 
         # Convert DataFrame to JSON-compatible dictionary
         return result_df.to_dict(orient="records")
@@ -140,7 +143,7 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
         full_df["date"] = pd.to_datetime(full_df["data"], format="%d/%m/%Y")
 
         # Convert 'valor' column to numeric, handling different decimal separators
-        full_df["Close"] = pd.to_numeric(full_df["valor"], errors="coerce")
+        full_df["close"] = pd.to_numeric(full_df["valor"], errors="coerce")
 
         # Process and standardize the data
         full_df["ticker"] = code
@@ -148,7 +151,7 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
         full_df["extracted_date"] = datetime.now()
 
         # Convert to dictionary/JSON format
-        result = full_df[["date", "Close", "ticker", "source", "extracted_date"]].to_dict(
+        result = full_df[["date", "close", "ticker", "source", "extracted_date"]].to_dict(
             orient="records"
         )
 
@@ -160,7 +163,6 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
         raise RuntimeError(f"Data parsing error: {str(e)}")
     except Exception as e:
         raise RuntimeError(f"Unexpected error while fetching SGS data: {str(e)}")
-
 
 def get_sgs_last_data(code: str) -> Dict:
     """
@@ -214,7 +216,7 @@ def get_yahoo_finance_historical_data(code: str) -> Dict:
     Fetch complete historical data for a given ticker from Yahoo Finance.
 
     Args:
-        code (str): The ticker symbol (e.g., 'AAPL', 'PETR4.SA').
+        code (str): The ticker symbol.
 
     Returns:
         Dict: JSON-compatible dictionary containing all available historical data.
@@ -237,6 +239,9 @@ def get_yahoo_finance_historical_data(code: str) -> Dict:
         df["ticker"] = code
         df["source"] = "Yahoo Finance"
         df["extracted_date"] = datetime.now()
+
+        # Calculate daily returns
+        df["close"] = df["Close"].pct_change()
 
         # Select only the required columns
         result_df = df[["date", "Close", "ticker", "source", "extracted_date"]].copy()
