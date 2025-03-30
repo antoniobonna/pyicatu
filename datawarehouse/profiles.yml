@@ -1,0 +1,12 @@
+datawarehouse:
+  outputs:
+    dev:
+      dbname: icatu_db
+      host: localhost
+      pass: postgres
+      port: 5432
+      schema: financial_s
+      threads: 1
+      type: postgres
+      user: postgres
+  target: dev
