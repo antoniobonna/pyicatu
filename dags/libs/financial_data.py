@@ -164,6 +164,7 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
     except Exception as e:
         raise RuntimeError(f"Unexpected error while fetching SGS data: {str(e)}")
 
+
 def get_sgs_last_data(code: str) -> Dict:
     """
     Fetch the most recent data point for a given SGS series code.
