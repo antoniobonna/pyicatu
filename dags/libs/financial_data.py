@@ -161,6 +161,7 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> Dict:
     except Exception as e:
         raise RuntimeError(f"Unexpected error while fetching SGS data: {str(e)}")
 
+
 def get_sgs_last_data(code: str) -> Dict:
     """
     Fetch the most recent data point for a given SGS series code.
@@ -192,7 +193,7 @@ def get_sgs_last_data(code: str) -> Dict:
 
         # Convert to DataFrame for consistent processing
         df = pd.DataFrame(data)
-        
+
         # Data processing
         df["date"] = pd.to_datetime(df["data"], format="%d/%m/%Y")
         df["Close"] = pd.to_numeric(df["valor"], errors="coerce")
