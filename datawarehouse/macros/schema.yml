@@ -1,0 +1,16 @@
+version: 2
+
+macros:
+  - name: create_year_month_partitions
+    description: >
+      Creates monthly partitions for a table from 1990 to the current date plus a specified number of months.
+    arguments:
+      - name: table_relation
+        type: Relation
+        description: The table to create partitions for
+      - name: partition_column
+        type: string
+        description: The column to partition on
+      - name: months_ahead
+        type: integer
+        description: Number of months into the future to create partitions

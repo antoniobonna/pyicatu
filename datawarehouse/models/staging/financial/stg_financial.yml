@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: vw_stg_raw_market_data
+    description: Staged raw data with cleaned fields
+    columns:
+      - name: ticker_type_nm
+        description: Cleaned ticker name
+      - name: ticker_date
+        description: Date of the observation
+      - name: profitability
+        description: Profitability/returns data
+      - name: is_src
+        description: True if source is SGS

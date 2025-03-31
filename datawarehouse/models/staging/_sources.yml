@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw data source
+    schema: public  # PostgreSQL schema
+    tables:
+      - name: raw_market_data
+        description: Raw data with date, ticker, close, source and extracted_date
+        columns:
+          - name: date
+            description: Date of the observation
+          - name: ticker
+            description: Stock ticker identifier
+          - name: close
+            description: Profitability/returns data
+          - name: source
+            description: Source of the data
+          - name: extracted_date
+            description: Date when the data was extracted

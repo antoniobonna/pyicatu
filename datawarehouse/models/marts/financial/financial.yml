@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: dim_ticker_type_tb
+    description: Dimension table for ticker types
+    columns:
+      - name: ticker_type_id
+        description: Surrogate key for ticker type
+        tests:
+          - unique
+          - not_null
+      - name: ticker_type_nm
+        description: Ticker type name
+        tests:
+          - unique
+          - not_null
+      - name: is_sgs
+        description: True if source is SGS
+
+  - name: dim_ticker_tb
+    description: Dimension table for tickers
+    columns:
+      - name: ticker_id
+        description: Surrogate key for ticker
+        tests:
+          - unique
+          - not_null
+      - name: ticker_type_id
+        description: Foreign key to dim_ticker_type_tb
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_ticker_type_tb')
+              field: ticker_type_id
+      - name: ticker_nm
+        description: Ticker name
+        tests:
+          - unique
+          - not_null
+      - name: annual_tax
+        description: Annual tax rate (default null)
+
+  - name: dim_date_tb
+    description: Dimension table for dates
+    columns:
+      - name: ticker_date
+        description: Date in original format
+        tests:
+          - unique
+          - not_null
+      - name: month
+        description: Month number (1-12)
+      - name: year
+        description: Year
+      - name: quarter
+        description: Quarter number (1-4)
+        
+  - name: fct_serie_tb
+    description: Fact table for series data, partitioned by ticker_date
+    columns:
+      - name: serie_id
+        description: Surrogate key for the series
+        tests:
+          - unique
+          - not_null
+      - name: ticker_date
+        description: Date of the observation, used for partitioning
+        tests:
+          - relationships:
+              to: ref('dim_date_tb')
+              field: ticker_date
+      - name: ticker_type_id
+        description: Foreign key to dim_ticker_type
+        tests:
+          - relationships:
+              to: ref('dim_ticker_type_tb')
+              field: ticker_type_id
+      - name: profability
+        description: Profitability/returns data

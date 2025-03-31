@@ -150,10 +150,7 @@ def financial_data_initialization():
         # Get database engine and write data
         engine = create_postgres_engine()
         success = write_dataframe_to_table(
-            df=df,
-            table_name=RAW_TABLE_NAME,
-            engine=engine,
-            if_exists="append"
+            df=df, table_name=RAW_TABLE_NAME, engine=engine, if_exists="append"
         )
 
         if not success:
@@ -194,10 +191,7 @@ def financial_data_initialization():
         # Get database engine and write data
         engine = create_postgres_engine()
         success = write_dataframe_to_table(
-            df=df,
-            table_name=RAW_TABLE_NAME,
-            engine=engine,
-            if_exists="append"
+            df=df, table_name=RAW_TABLE_NAME, engine=engine, if_exists="append"
         )
 
         if not success:
