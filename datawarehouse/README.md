@@ -40,14 +40,14 @@ This project follows the [dbt best practices](https://docs.getdbt.com/best-pract
 
 To run a full rebuild of all models:
 ```bash
-dbt run
+dbt run --full-refresh
 ```
 
 ### Incremental Loading
 
 To run an incremental load (only processing new data):
 ```bash
-dbt run --select marts.financial.facts marts.financial.dimensions.dim_ticker marts.financial.dimensions.dim_ticker_type --vars '{"is_incremental_run": true}'
+dbt run
 ```
 
 ## Testing
@@ -62,7 +62,7 @@ dbt test
 Generate and view documentation with:
 ```bash
 dbt docs generate
-dbt docs serve
+dbt docs serve --port 8081
 ```
 
 ## Contributing

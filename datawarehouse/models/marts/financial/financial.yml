@@ -9,6 +9,8 @@ models:
         tests:
           - unique
           - not_null
+        meta:
+          primary_key: true
       - name: ticker_type_nm
         description: Ticker type name
         tests:
@@ -25,6 +27,8 @@ models:
         tests:
           - unique
           - not_null
+        meta:
+          primary_key: true
       - name: ticker_type_id
         description: Foreign key to dim_ticker_type_tb
         tests:
@@ -32,6 +36,8 @@ models:
           - relationships:
               to: ref('dim_ticker_type_tb')
               field: ticker_type_id
+        meta:
+          foreign_key: true
       - name: ticker_nm
         description: Ticker name
         tests:
@@ -48,32 +54,42 @@ models:
         tests:
           - unique
           - not_null
+        meta:
+          primary_key: true
       - name: month
         description: Month number (1-12)
       - name: year
         description: Year
       - name: quarter
         description: Quarter number (1-4)
-        
+
   - name: fct_serie_tb
-    description: Fact table for series data, partitioned by ticker_date
+    description: Fact table for series data
     columns:
       - name: serie_id
         description: Surrogate key for the series
         tests:
           - unique
           - not_null
+        meta:
+          primary_key: true
       - name: ticker_date
-        description: Date of the observation, used for partitioning
+        description: Date of the observation
         tests:
+          - not_null
           - relationships:
               to: ref('dim_date_tb')
               field: ticker_date
+        meta:
+          foreign_key: true
       - name: ticker_type_id
         description: Foreign key to dim_ticker_type
         tests:
+          - not_null
           - relationships:
               to: ref('dim_ticker_type_tb')
               field: ticker_type_id
-      - name: profability
+        meta:
+          foreign_key: true
+      - name: profitability
         description: Profitability/returns data
