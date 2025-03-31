@@ -30,7 +30,7 @@ BOVESPA_CODE = "^BVSP"  # Yahoo Finance ticker symbol for Bovespa index
 CDI_CODE = "12"  # SGS code for CDI (Certificado de Depósito Interbancário) rate
 INITIAL_DATE = date(2000, 1, 1)  # Start date for historical data
 RAW_TABLE_NAME = "raw_market_data"  # Target table for storing both datasets
-DBT_PROJECT_DIR = "/usr/local/airflow/datawarehouse" # Path to dbt project directory
+DBT_PROJECT_DIR = "/usr/local/airflow/datawarehouse"  # Path to dbt project directory
 
 default_args = {
     "owner": "Astro",
