@@ -56,6 +56,9 @@ def get_yahoo_finance_data(code: str, date_init: date, date_end: date) -> str:
         # Calculate daily returns
         df["close"] = df["Close"].pct_change()
 
+        # Remove NA rows in close column
+        df.dropna(subset=["close"], inplace=True)
+
         # Select only the required columns
         result_df = df[["date", "close", "ticker", "source", "extracted_date"]].copy()
 
@@ -244,6 +247,9 @@ def get_yahoo_finance_historical_data(code: str) -> str:
 
         # Calculate daily returns
         df["close"] = df["Close"].pct_change()
+
+        # Remove NA rows in close column
+        df.dropna(subset=["close"], inplace=True)
 
         # Select only the required columns
         result_df = df[["date", "close", "ticker", "source", "extracted_date"]].copy()

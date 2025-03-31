@@ -10,16 +10,19 @@ Flow:
 2. Fetches historical Bovespa data from Yahoo Finance
 3. Fetches historical CDI rates from SGS
 4. Stores both datasets in PostgreSQL
+5. Runs DBT workflows to transform raw data into analytics-ready models
 
 Dependencies:
 - libs.database: Custom module for database operations
 - libs.financial_data: Custom module with financial data fetching functions
 - Pandas: For data manipulation before database insertion
+- dbt: For data transformation and testing after initial load
 """
 
 from datetime import date, timedelta
 
 from airflow.decorators import dag, task
+from airflow.operators.bash_operator import BashOperator
 from airflow.utils.dates import days_ago
 
 # Constants
@@ -27,11 +30,12 @@ BOVESPA_CODE = "^BVSP"  # Yahoo Finance ticker symbol for Bovespa index
 CDI_CODE = "12"  # SGS code for CDI (Certificado de Depósito Interbancário) rate
 INITIAL_DATE = date(2000, 1, 1)  # Start date for historical data
 RAW_TABLE_NAME = "raw_market_data"  # Target table for storing both datasets
+DBT_PROJECT_DIR = "/usr/local/airflow/datawarehouse" # Path to dbt project directory
 
 default_args = {
     "owner": "Astro",
     "retries": 2,
-    "retry_delay": timedelta(minutes=5),
+    "retry_delay": timedelta(minutes=3),
 }
 
 
@@ -52,6 +56,10 @@ def financial_data_initialization():
     2. Fetch Bovespa historical data from Yahoo Finance
     3. Fetch CDI historical data from Brazilian Central Bank
     4. Store both datasets in PostgreSQL
+    5. Execute dbt operations:
+       - Install dependencies (dbt deps)
+       - Run transformations (dbt run)
+       - Execute tests (dbt test)
     """
 
     @task()
@@ -218,6 +226,31 @@ def financial_data_initialization():
         else:
             raise ValueError("Data loading completed with errors")
 
+    # DBT tasks for data transformation pipeline
+    dbt_deps = BashOperator(
+        task_id="dbt_deps",
+        bash_command=f"""
+        echo "Installing DBT dependencies..."
+        dbt deps --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}
+        """,
+    )
+
+    dbt_run = BashOperator(
+        task_id="dbt_run",
+        bash_command=f"""
+        echo "Running DBT run..."
+        dbt run --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}
+        """,
+    )
+
+    dbt_test = BashOperator(
+        task_id="dbt_test",
+        bash_command=f"""
+        echo "Running DBT test..."
+        dbt test --profiles-dir {DBT_PROJECT_DIR} --project-dir {DBT_PROJECT_DIR}
+        """,
+    )
+
     # Define task dependencies
     # Step 1: Create database
     db_created = create_database_task()
@@ -230,8 +263,12 @@ def financial_data_initialization():
     bovespa_loaded = load_bovespa_data(bovespa_data)
     cdi_loaded = load_cdi_data(cdi_data)
 
-    # Step 4: Final notification after all data is loaded
-    completion_notification(bovespa_loaded, cdi_loaded)
+    # Step 4: Notify completion of data loading
+    loading_complete = completion_notification(bovespa_loaded, cdi_loaded)
+
+    # Step 5: Run DBT workflow in sequence - first install dependencies,
+    # then run models, finally test data quality
+    loading_complete >> dbt_deps >> dbt_run >> dbt_test
 
 
 # Instantiate the DAG
