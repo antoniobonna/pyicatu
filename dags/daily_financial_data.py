@@ -1,7 +1,7 @@
 """
 DAG: Daily Financial Data Update
 
-This DAG runs every day at 8:00 PM to update the financial database with the most recent
+This DAG runs every day at 23:30 PM to update the financial database with the most recent
 market data from:
 - Yahoo Finance (e.g., Bovespa and other stock indices/prices)
 - Brazilian Central Bank's SGS system (e.g., CDI and other interest rates)
@@ -36,7 +36,7 @@ default_args = {
 
 @dag(
     default_args=default_args,
-    schedule_interval="0 20 * * *",
+    schedule_interval="30 23 * * *",
     dag_id="daily_financial_data_update",
     start_date=days_ago(1),
     tags=["financial_data", "daily_update"],
@@ -65,12 +65,12 @@ def daily_financial_data_update():
         engine = create_postgres_engine()
 
         query = """
-            SELECT 
-                ticker_type_nm, 
-                is_src 
-            FROM 
+            SELECT
+                ticker_type_nm,
+                is_src
+            FROM
                 financial_s.dim_ticker_type_tb
-            WHERE 
+            WHERE
                 is_active = true
         """
 
@@ -115,7 +115,7 @@ def daily_financial_data_update():
             ticker = row["ticker_type_nm"]
             try:
                 print(
-                    f"[{idx + 1}/{len(yahoo_tickers)}] Fetching data for {ticker} from {date_init} to {today}"
+                    f"[{idx + 1}/{len(yahoo_tickers)}] Fetching data for {ticker}"
                 )
                 data = get_yahoo_finance_data(ticker, date_init, today)
                 result.append(data)

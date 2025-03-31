@@ -54,7 +54,7 @@ quote-style = "double"  # Optional: Use double quotes
 
 [tool.ruff.lint.isort]
 # Your project name
-known-first-party = ["mercadolivre-scrapy"]
+known-first-party = ["pyicatu"]
 
 # Ruff automatically detects third-party packages from poetry dependencies
 known-third-party = []
