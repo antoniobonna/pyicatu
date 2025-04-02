@@ -32,7 +32,7 @@ WITH ticker_with_type AS (
     SELECT DISTINCT
         CASE
             WHEN t.ticker_type_nm = '^BVSP' THEN 'Ibovespa'
-            WHEN t.ticker_type_nm = '12' THEN 'Selic'
+            WHEN t.ticker_type_nm = '12' THEN 'CDI'
         END AS ticker_nm,
         t.ticker_type_id
     FROM {{ ref('vw_stg_raw_market_data') }} s

@@ -201,12 +201,12 @@ def get_sgs_last_data(code: str) -> str:
 
         # Data processing
         df["date"] = pd.to_datetime(df["data"], format="%d/%m/%Y")
-        df["Close"] = pd.to_numeric(df["valor"], errors="coerce")
+        df["close"] = pd.to_numeric(df["valor"], errors="coerce")
         df["ticker"] = code
         df["source"] = "SGS"
         df["extracted_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-        return df[["date", "Close", "ticker", "source", "extracted_date"]].to_json(
+        return df[["date", "close", "ticker", "source", "extracted_date"]].to_json(
             orient="records", date_format="iso"
         )
 
