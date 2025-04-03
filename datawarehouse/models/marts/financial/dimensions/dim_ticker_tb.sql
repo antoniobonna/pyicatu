@@ -21,6 +21,7 @@
               ADD CONSTRAINT dim_ticker_fk_type
               FOREIGN KEY (ticker_type_id)
               REFERENCES {{ ref('dim_ticker_type_tb') }} (ticker_type_id);
+              CREATE INDEX ON {{ this }} (ticker_nm);
           END IF;
       END$$;
       """

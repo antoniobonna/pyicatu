@@ -10,6 +10,7 @@
               SELECT 1 FROM pg_constraint WHERE conname = 'dim_ticker_type_pk'
           ) THEN
               ALTER TABLE {{ this }} ADD CONSTRAINT dim_ticker_type_pk PRIMARY KEY (ticker_type_id);
+              CREATE INDEX ON {{ this }} (ticker_type_nm);
           END IF;
       END$$;
       """

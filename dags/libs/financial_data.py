@@ -144,8 +144,8 @@ def get_sgs_data(code: str, date_init: date, date_end: date) -> str:
         # Convert 'data' column to datetime format
         full_df["date"] = pd.to_datetime(full_df["data"], format="%d/%m/%Y")
 
-        # Convert 'valor' column to numeric, handling different decimal separators
-        full_df["close"] = pd.to_numeric(full_df["valor"], errors="coerce")
+        # Convert 'valor' column to numeric and divide by 100 as it's a percentage
+        full_df["close"] = pd.to_numeric(full_df["valor"], errors="coerce") / 100
 
         # Process and standardize the data
         full_df["ticker"] = code
@@ -199,9 +199,11 @@ def get_sgs_last_data(code: str) -> str:
         # Convert to DataFrame for consistent processing
         df = pd.DataFrame(data)
 
+        # Convert 'valor' column to numeric and divide by 100 as it's a percentage
+        df["close"] = pd.to_numeric(df["valor"], errors="coerce") / 100
+
         # Data processing
         df["date"] = pd.to_datetime(df["data"], format="%d/%m/%Y")
-        df["close"] = pd.to_numeric(df["valor"], errors="coerce")
         df["ticker"] = code
         df["source"] = "SGS"
         df["extracted_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
