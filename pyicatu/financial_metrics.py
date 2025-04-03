@@ -58,7 +58,7 @@ class FinancialMetrics:
         df["daily_tax"] = np.where(
             df["annual_tax"].notnull(),
             100 * ((1 + df["annual_tax"]) ** (1 / BUSINESS_DAYS_PER_YEAR) - 1),
-            0.0
+            0.0,
         )
 
         # Calculate tax-adjusted profitability

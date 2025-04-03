@@ -1,0 +1,19 @@
+services:
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fastapi_custom:dev
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+    working_dir: /usr/local/airflow/api_icatu/app
+    volumes:
+      - ./:/usr/local/airflow
+    ports:
+      - "8001:8001"
+    networks:
+      - airflow-shared
+
+networks:
+  airflow-shared:
+    external: true
+    name: ${ASTRO_NETWORK}
