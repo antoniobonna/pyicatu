@@ -38,6 +38,8 @@ flowchart TD;
     E --> F[(Banco de Dados)]
     F --> G[API REST]
     G --> H[Interface Web]
+    %% New arrow added from API REST back to Banco de Dados
+    G --> F
 ```
 
 ---
