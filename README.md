@@ -138,6 +138,23 @@ Abra [http://localhost:8080](http://localhost:8080) (senha padrão: admin:admin)
 
 ---
 
+## 6. 🔗 Acesse o Streamlit
+
+Abra [http://localhost:8501](http://localhost:8501) para utilizar a interface web.
+
+---
+
+## Acesse as interfaces
+
+- [Airflow](http://localhost:8080)
+- [FastAPI](http://localhost:8001)
+- [Teste de conexão com o banco](http://localhost:8001/ping-db)
+- [Streamlit](http://localhost:8501)
+
+---
+
+---
+
 ## 🧱 Estrutura do Projeto
 
 ```plaintext
@@ -158,20 +175,6 @@ Abra [http://localhost:8080](http://localhost:8080) (senha padrão: admin:admin)
 ├── pyproject.toml / poetry.lock
 └── README.md
 ```
-
----
-
-## 🔗 Acesse o Streamlit
-
-Abra [http://localhost:8501](http://localhost:8501) para utilizar a interface web.
-
-## 6. Acesse as interfaces
-
-- [Airflow](http://localhost:8080)
-- [FastAPI](http://localhost:8001)
-- [Teste de conexão com o banco](http://localhost:8001/ping-db)
-- [Streamlit](http://localhost:8501)
-
 ---
 
 ## ✅ Sobre o Teste Técnico
