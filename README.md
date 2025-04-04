@@ -79,7 +79,7 @@ docker compose -f docker-compose.override.yml build
 astro dev init
 ```
 
-### 3. Atualize o arquivo `.env` com as variáveis de ambiente. Como padrão:
+### 3. Adicione o arquivo `.env` com as variáveis de ambiente. Como padrão (pode renomear o exemplo.env):
 
 ```env
 POSTGRES_USER=postgres
