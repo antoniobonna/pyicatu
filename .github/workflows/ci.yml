@@ -25,8 +25,8 @@ jobs:
           pip install -r requirements.txt
           pip install pytest ruff pylint pip-audit
 
-      - name: 🧹 Lint com Ruff
-        run: ruff . --output-format=github
+      - name: 🧹 Format com Ruff
+        run: ruff format . --output-format=github
 
       - name: 🕵️ Pylint
         run: ruff check . --fix --select Q,I pyicatu api_icatu dashboard
