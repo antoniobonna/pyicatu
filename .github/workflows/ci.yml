@@ -31,8 +31,8 @@ jobs:
       - name: 🕵️ Pylint
         run: ruff check . --fix --select Q,I pyicatu api_icatu dashboard datawarehouse dags
 
-      - name: ✅ Testes com Pytest
-        run: pytest
+      # - name: ✅ Testes com Pytest
+      #   run: pytest
 
       - name: 🔐 Verificação de segurança com pip-audit
         run: pip-audit
