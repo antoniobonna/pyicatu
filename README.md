@@ -129,7 +129,7 @@ astro dev restart
 
 ### 5. Acesse o Airflow
 
-Abra [http://localhost:8080](http://localhost:8080) e:
+Abra [http://localhost:8080](http://localhost:8080) (senha padrão: admin:admin) e:
 
 - Inicie a DAG `financial_data_initialization` para carregar os dados iniciais
 - Ative a DAG `daily_financial_data_update` para atualização incremental diária
