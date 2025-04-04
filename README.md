@@ -1,6 +1,15 @@
 # 💰 Calculadora de Rentabilidade Financeira
 
-Projeto técnico completo com ETL, banco de dados, API e interface web com deploy via Docker e Astronomer.
+Projeto técnico completo com ETL automatizado, banco de dados relacional, API RESTful e interface web interativa, containerizado com Docker e orquestrado via Airflow.
+
+---
+
+## 📥 Clone o Repositório
+
+```bash
+git clone https://github.com/antoniobonna/pyicatu.git
+cd pyicatu
+```
 
 ---
 
@@ -35,21 +44,22 @@ flowchart TD;
 
 ## ⚙️ Tecnologias Utilizadas
 
-| Componente   | Tecnologia         |
-|--------------|--------------------|
-| Orquestração | Apache Airflow + Astronomer |
-| Transformações | dbt               |
-| Armazenamento | PostgreSQL         |
-| Backend API  | FastAPI             |
-| Frontend     | Streamlit           |
-| Containerização | Docker + Compose |
+| Componente     | Tecnologia                    |
+|----------------|-------------------------------|
+| Orquestração   | Apache Airflow + Astronomer   |
+| Transformações | dbt                           |
+| Armazenamento  | PostgreSQL                    |
+| API Backend    | FastAPI                       |
+| Interface Web  | Streamlit                     |
+| Infraestrutura | Docker + Docker Compose       |
 
 ---
 
 ## Requisitos
 
-- Instale o **Docker**: https://www.docker.com/products/docker-desktop
-- Instale o **Astronomer CLI**: https://docs.astronomer.io/astro/cli/install-cli
+- [Instale o **Docker**](https://www.docker.com/products/docker-desktop)
+- [Instale o **Astronomer CLI**](https://docs.astronomer.io/astro/cli/install-cli)
+- Python 3.10+
 
 ---
 
@@ -117,7 +127,6 @@ Abra [http://localhost:8080](http://localhost:8080) e:
 
 ---
 
-
 ## 🔗 Acesse o Streamlit
 
 Abra [http://localhost:8501](http://localhost:8501) para utilizar a interface web.
@@ -143,24 +152,16 @@ Este projeto foi desenvolvido como solução para o teste técnico **Calculadora
 
 ### 📌 Requisitos Técnicos Atendidos
 
-- **ETL com Airflow**: coleta, transformação e carga automatizada dos dados
-- **DBT**: estruturação dos dados em modelo dimensional
-- **PostgreSQL**: banco relacional para armazenamento
-- **FastAPI**: API com endpoints para rentabilidade e CRUD
-- **Streamlit**: interface web moderna e responsiva
-- **Docker e Astronomer**: para containerização e orquestração
-
-### ✅ Funcionalidades
-
-- Atualização incremental diária dos dados (DAG `daily_financial_data_update`)
-- Interface com CRUD de ativos, seleção de índice e cálculo de rentabilidade
-- Retorno em tabela formatada + gráfico de linha interativo com Plotly
-- Testes e documentação incluídos
+- ✅ **ETL com Airflow**: coleta, transformação e carga automatizada dos dados
+- ✅ **DBT**: estruturação dos dados em modelo dimensional
+- ✅ **PostgreSQL**: banco relacional para armazenamento
+- ✅ **FastAPI**: API com endpoints para rentabilidade e CRUD
+- ✅ **Streamlit**: interface web moderna e responsiva
+- ✅ **Docker e Astronomer**: containerização e orquestração
 
 ---
-    
-## 📈 Sobre o Streamlit
 
+## 📈 Sobre o Streamlit
 
 A interface permite:
 
