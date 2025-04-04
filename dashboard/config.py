@@ -4,6 +4,7 @@ import streamlit as st
 # Constants
 API_URL = "http://fastapi:8001/api/v1"
 
+
 def setup_page_config():
     """Configure a página do Streamlit e aplica estilos CSS"""
     # Set page config
@@ -170,18 +171,23 @@ def setup_page_config():
         unsafe_allow_html=True,
     )
 
+
 # Custom styled messages
 def success_message(text):
     st.markdown(f'<div class="success-message">{text}</div>', unsafe_allow_html=True)
 
+
 def warning_message(text):
     st.markdown(f'<div class="warning-message">{text}</div>', unsafe_allow_html=True)
+
 
 def error_message(text):
     st.markdown(f'<div class="error-message">{text}</div>', unsafe_allow_html=True)
 
+
 def info_message(text):
     st.markdown(f'<div class="info-message">{text}</div>', unsafe_allow_html=True)
+
 
 # Card container
 def card_container():
