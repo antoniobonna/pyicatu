@@ -1,73 +1,73 @@
-# Financial Data Warehouse
+# Armazém de Dados Financeiros
 
-This dbt project implements a multidimensional data warehouse for financial time series data.
+Este projeto dbt implementa um data warehouse multidimensional para séries temporais de dados financeiros.
 
-## Project Overview
+## Visão Geral do Projeto
 
-This project transforms raw financial data into a dimensional model with:
-- Dimension tables for tickers, ticker types, and dates
-- A fact table for financial series data with rentabilidade metrics
-- Support for incremental loading
-- Time-based partitioning by year and month
+Este projeto transforma dados financeiros brutos em um modelo dimensional com:
+- Tabelas de dimensão para tickers, tipos de ticker e datas
+- Uma tabela fato para dados de séries financeiras com métricas de rentabilidade
+- Suporte para carregamento incremental
+- Particionamento temporal por ano e mês
 
-## Getting Started
+## Primeiros Passos
 
-### Prerequisites
+### Pré-requisitos
 
-- dbt 1.3.0 or higher
-- PostgreSQL database
-- dbt-utils package
+- dbt 1.3.0 ou superior
+- Banco de dados PostgreSQL
+- Pacote dbt-utils
 
-### Installation
+### Instalação
 
-1. Clone this repository
-2. Update the `profiles.yml` file with your database connection details
-3. Run `dbt deps` to install package dependencies
-4. Run `dbt run` to build the models
+1. Clone este repositório
+2. Atualize o arquivo `profiles.yml` com os dados de conexão do seu banco de dados
+3. Execute `dbt deps` para instalar as dependências
+4. Execute `dbt run` para construir os modelos
 
-## Project Structure
+## Estrutura do Projeto
 
-This project follows the [dbt best practices](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) for project structure:
+Este projeto segue as [melhores práticas do dbt](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) para estruturação:
 
-- **staging**: Raw data cleaning and standardization
-- **marts/dimensions**: Dimension tables (ticker, ticker type, date)
-- **marts/facts**: Fact tables (financial series data)
-- **macros**: Custom functionality for partitioning
+- **staging**: Limpeza e padronização dos dados brutos
+- **marts/dimensions**: Tabelas de dimensão (ticker, tipo de ticker, data)
+- **marts/facts**: Tabelas fato (dados de séries financeiras)
+- **macros**: Funcionalidades customizadas para particionamento
 
-## Usage
+## Uso
 
-### Full Rebuild
+### Reconstrução Completa
 
-To run a full rebuild of all models:
+Para executar uma reconstrução completa de todos os modelos:
 ```bash
 dbt run --full-refresh
 ```
 
-### Incremental Loading
+### Carregamento Incremental
 
-To run an incremental load (only processing new data):
+Para executar um carregamento incremental (processando apenas novos dados):
 ```bash
 dbt run
 ```
 
-## Testing
+## Testes
 
-Run the test suite with:
+Execute a suíte de testes com:
 ```bash
 dbt test
 ```
 
-## Documentation
+## Documentação
 
-Generate and view documentation with:
+Gere e visualize a documentação com:
 ```bash
 dbt docs generate
 dbt docs serve --port 8081
 ```
 
-## Contributing
+## Contribuindo
 
-1. Create a feature branch
-2. Make your changes
-3. Run tests
-4. Submit a pull request
+1. Crie uma branch de funcionalidade
+2. Faça suas alterações
+3. Execute os testes
+4. Envie um pull request

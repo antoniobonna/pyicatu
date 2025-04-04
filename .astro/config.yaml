@@ -4,5 +4,7 @@ deployments:
 extra_containers:
     - image: fastapi_custom:dev
       name: fastapi
+    - image: streamlit_custom:dev
+      name: streamlit
 project:
     name: pyicatu

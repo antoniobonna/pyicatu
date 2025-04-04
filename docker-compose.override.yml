@@ -15,6 +15,21 @@ services:
     networks:
       - airflow-shared
 
+  streamlit:
+    build:
+      context: ./dashboard
+    image: streamlit_custom:dev
+    container_name: streamlit-app
+    command: streamlit run app.py --server.port=8501 --server.enableCORS=false
+    volumes:
+      - ./dashboard:/app
+    ports:
+      - "8501:8501"
+    networks:
+      - airflow-shared
+    env_file:
+      - .env
+
 networks:
   airflow-shared:
     external: true

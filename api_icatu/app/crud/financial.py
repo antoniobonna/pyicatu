@@ -132,7 +132,7 @@ class TickerService:
 
         Args:
             db: Database session
-            ticker_nm: New ticker name (optional)
+            ticker_nm: Ticker name
             ticker_type_nm: New ticker type name (optional)
             annual_tax: New annual tax rate (optional)
             new_ticker_nm: New ticker name (optional)
