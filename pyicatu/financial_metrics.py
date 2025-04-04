@@ -57,7 +57,7 @@ class FinancialMetrics:
         # Calculate daily tax from annual rate (business days per year)
         df["daily_tax"] = np.where(
             df["annual_tax"].notnull(),
-            100 * ((1 + df["annual_tax"]) ** (1 / BUSINESS_DAYS_PER_YEAR) - 1),
+            ((1 + df["annual_tax"]) ** (1 / BUSINESS_DAYS_PER_YEAR) - 1),
             0.0,
         )
 
@@ -69,7 +69,9 @@ class FinancialMetrics:
 
         return df
 
-    def get_cumulative_profitability(self, ticker: str, init_date: date, end_date: date) -> float:
+    def get_cumulative_profitability(
+        self, ticker: str, init_date: date, end_date: date
+    ) -> dict[str, float]:
         """
         Calculate cumulative profitability between dates.
 
@@ -79,7 +81,7 @@ class FinancialMetrics:
             end_date: End date (datetime.date)
 
         Returns:
-            float: Cumulative return as a decimal (e.g., 0.0525 for 5.25%)
+            dict[str, float]: Cumulative return as decimal
         """
         # Get adjusted profitability data
         df = self.fetch_profitability(ticker, init_date, end_date)
@@ -89,9 +91,12 @@ class FinancialMetrics:
             return 0.0
 
         # Calculate cumulative return
-        cumulative_return = (1 + df["adjusted_profitability"]).cumprod()
+        df["cumulative_return"] = (1 + df["adjusted_profitability"]).cumprod() - 1
 
-        return float(cumulative_return.iloc[-1] - 1)
+        # Filter columns
+        df = df[["ticker_date", "cumulative_return"]]
+
+        return df.to_dict(orient="records")
 
     def get_monthly_cumulative_profitability(
         self, ticker: str, init_date: date, end_date: date

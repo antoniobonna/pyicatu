@@ -14,6 +14,12 @@ cd seu-repo
 
 ---
 
+## 2. Inicie o fast_api
+
+```bash 
+docker compose -f docker-compose.override.yml build fastapi
+```
+
 ## 2. Inicialize o projeto Astronomer
 
 Este comando cria os arquivos de configuração necessários:

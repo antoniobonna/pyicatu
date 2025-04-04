@@ -6,14 +6,16 @@ services:
     image: fastapi_custom:dev
     command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
     working_dir: /usr/local/airflow/api_icatu/app
-    volumes:
-      - ./:/usr/local/airflow
+    env_file:
+      - .env
     ports:
       - "8001:8001"
+    volumes:
+      - ./api_icatu/app:/usr/local/airflow/api_icatu/app
     networks:
       - airflow-shared
 
 networks:
   airflow-shared:
     external: true
-    name: ${ASTRO_NETWORK}
+    name: pyicatu_52b355_airflow

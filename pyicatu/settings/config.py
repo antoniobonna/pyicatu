@@ -3,13 +3,11 @@ Database configuration settings loaded from environment variables.
 """
 
 import os
-from pathlib import Path
 
 from dotenv import load_dotenv
 
-# Load .env from project root
-env_path = Path(__file__).parent.parent.parent / ".env"
-load_dotenv(dotenv_path=env_path)
+# Load environment variables from .env file
+load_dotenv()
 
 
 class DatabaseConfig:
@@ -19,7 +17,7 @@ class DatabaseConfig:
 
     USER = os.getenv("POSTGRES_USER")
     PASSWORD = os.getenv("POSTGRES_PASSWORD")
-    HOST = os.getenv("POSTGRES_HOST_PROD")
+    HOST = os.getenv("POSTGRES_HOST")
     PORT = os.getenv("POSTGRES_PORT", "5432")
     DB = os.getenv("POSTGRES_DB")
 

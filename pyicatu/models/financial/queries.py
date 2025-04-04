@@ -60,11 +60,13 @@ def get_profitability_df(
 
     try:
         # Execute query with parameters and convert to DataFrame
-        with db_engine.connect() as conn:
+        with db_engine.connect() as connection:
+            raw_conn = connection.connection
             return pd.read_sql(
                 query,
-                conn,
+                raw_conn,
                 parse_dates=["ticker_date"],
+                params={"ticker": ticker, "init_date": init_date, "end_date": end_date},
             )
     except SQLAlchemyError as e:
         raise ValueError(f"Query execution failed: {e}") from e

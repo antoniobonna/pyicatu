@@ -75,7 +75,10 @@ class TickerService:
         Returns:
             List of ticker type names (strings)
         """
-        return [ticker.ticker_type_nm for ticker in db.query(TickerType).all()]
+        return [
+            ticker.ticker_nm
+            for ticker in db.query(Ticker).filter(Ticker.annual_tax.is_(None)).all()
+        ]
 
     @staticmethod
     def create_ticker(

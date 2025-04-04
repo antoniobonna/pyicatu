@@ -15,7 +15,7 @@ from pyicatu.financial_metrics import FinancialMetrics
 router = APIRouter(tags=["Rentabilidade"])
 
 
-@router.post("/profitability/cumulative", response_model=CumulativeProfitabilityResponse)
+@router.post("/profitability/cumulative", response_model=list[CumulativeProfitabilityResponse])
 def calculate_cumulative_profitability(
     request: ProfitabilityRequest, db: Session = Depends(get_db)
 ) -> Any:
@@ -37,12 +37,7 @@ def calculate_cumulative_profitability(
         request.ticker_nm, request.init_date, request.end_date
     )
 
-    return {
-        "ticker_nm": request.ticker_nm,
-        "init_date": request.init_date,
-        "end_date": request.end_date,
-        "cumulative_return": cumulative_return,
-    }
+    return cumulative_return
 
 
 @router.post("/profitability/monthly", response_model=MonthlyProfitabilityResponse)

@@ -28,6 +28,15 @@ def read_tickers(db: Session = Depends(get_db)) -> Any:
     return tickers
 
 
+@router.get("/types", response_model=list[str])
+def read_tickers_types(db: Session = Depends(get_db)) -> Any:
+    """
+    Retorna lista com todos tipos de tickers.
+    """
+    tickers = TickerService.get_all_ticker_types(db)
+    return tickers
+
+
 @router.post("/", response_model=TickerResponse, status_code=status.HTTP_201_CREATED)
 def create_ticker(ticker_in: TickerCreate, db: Session = Depends(get_db)) -> Any:
     """

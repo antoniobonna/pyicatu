@@ -94,9 +94,7 @@ class MonthlyProfitability(BaseModel):
 class CumulativeProfitabilityResponse(BaseModel):
     """Schema for cumulative profitability response."""
 
-    ticker_nm: str
-    init_date: date
-    end_date: date
+    ticker_date: date
     cumulative_return: float
 
 

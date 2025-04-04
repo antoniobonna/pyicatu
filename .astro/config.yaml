@@ -1,10 +1,8 @@
-project:
-  name: pyicatu
-
 deployments:
-  default:
-    astro_runtime_version: 12.7.1
-
+    default:
+        astro_runtime_version: 12.7.1
 extra_containers:
-  - name: fastapi
-    image: fastapi_custom:dev
+    - image: fastapi_custom:dev
+      name: fastapi
+project:
+    name: pyicatu
