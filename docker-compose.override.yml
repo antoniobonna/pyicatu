@@ -33,4 +33,4 @@ services:
 networks:
   airflow-shared:
     external: true
-    name: pyicatu_c5f8c1_airflow
+    name: pyicatu_52b355_airflow

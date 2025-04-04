@@ -98,7 +98,7 @@ astro dev start
 
 ### ⚠️ Caso `astro dev start` falhe por erro de rede
 
-Se você receber um erro como `Error response from daemon: No such network: airflow-shared` ou similar, siga os passos abaixo:
+Se você receber um erro como `Error: error building, (re)creating or starting project containers` ou similar, siga os passos abaixo:
 
 1. Liste as redes Docker com:
 
