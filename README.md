@@ -1,6 +1,6 @@
 # 💰 Calculadora de Rentabilidade Financeira
 
-Projeto técnico completo com ETL automatizado, banco de dados relacional, API RESTful e interface web interativa, containerizado com Docker e orquestrado via Airflow.
+Projeto técnico completo com ETL automatizado, banco de dados relacional, API RESTful e interface web interativa, containerizado com Docker e orquestrado via Astronomer.
 
 ---
 
@@ -104,7 +104,6 @@ Abra [http://localhost:8080](http://localhost:8080) e:
 
   ![airflow](https://github.com/user-attachments/assets/a09b742d-d560-4985-9ad6-8c50a732eeb5)
 
-
 ---
 
 ## 🧱 Estrutura do Projeto
@@ -164,7 +163,25 @@ Este projeto foi desenvolvido como solução para o teste técnico **Calculadora
 
 ---
 
+
+## 🔎 Fontes de Dados Utilizadas
+
+- [SGS - Sistema Gerenciador de Séries Temporais (Banco Central do Brasil)](https://www3.bcb.gov.br/sgspub/localizarseries/localizarSeries.do?method=prepararTelaLocalizarSeries)
+- [Yahoo Finance API](https://finance.yahoo.com/)
+
+## ⚙️ CI/CD com GitHub Actions
+
+Este projeto possui integração contínua com:
+
+- **Ruff**: validação de estilo de código e formatação
+- **Pylint**: análise estática de qualidade de código
+- **Pytest**: execução de testes automatizados
+- **pip-audit**: verificação de pacotes vulneráveis
+
+As ações são executadas automaticamente a cada push, garantindo qualidade, segurança e confiabilidade no deploy.
+
 ## 📈 Sobre o Streamlit
+
 
 A interface permite:
 
