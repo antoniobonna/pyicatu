@@ -26,10 +26,10 @@ jobs:
           pip install pytest ruff pylint pip-audit
 
       - name: 🧹 Format com Ruff
-        run: ruff format . --output-format=github
+        run: ruff format pyicatu api_icatu dashboard datawarehouse dags
 
       - name: 🕵️ Pylint
-        run: ruff check . --fix --select Q,I pyicatu api_icatu dashboard
+        run: ruff check . --fix --select Q,I pyicatu api_icatu dashboard datawarehouse dags
 
       - name: ✅ Testes com Pytest
         run: pytest
