@@ -38,7 +38,6 @@ flowchart TD;
     E --> F[(Banco de Dados)]
     F --> G[API REST]
     G --> H[Interface Web]
-    %% New arrow added from API REST back to Banco de Dados
     G --> F
 ```
 
@@ -79,7 +78,7 @@ docker compose -f docker-compose.override.yml build
 astro dev init
 ```
 
-### 3. Adicione o arquivo `.env` com as variáveis de ambiente. Como padrão (pode renomear o exemplo.env):
+### 3. Atualize o arquivo `.env` com as variáveis de ambiente. Como padrão:
 
 ```env
 POSTGRES_USER=postgres
@@ -97,6 +96,37 @@ ASTRO_NETWORK=pyicatu_52b355_airflow
 astro dev start
 ```
 
+### ⚠️ Caso `astro dev start` falhe por erro de rede
+
+Se você receber um erro como `Error response from daemon: No such network: airflow-shared` ou similar, siga os passos abaixo:
+
+1. Liste as redes Docker com:
+
+```bash
+docker network ls --filter name=_airflow
+```
+
+2. Você verá algo como:
+
+```
+NETWORK ID     NAME                            DRIVER    SCOPE
+7d4e3cb1fd00   pyicatu_xxxxx_airflow           bridge    local
+```
+
+3. Copie o nome da rede (ex: `pyicatu_52b355_airflow`) e substitua no seu arquivo `docker-compose.override.yml`, na seção:
+
+```yaml
+networks:
+  airflow-shared:
+    external: true
+    name: pyicatu_52b355_airflow
+```
+
+4. Faça novamente o build do Astronomer
+```bash
+astro dev restart
+```
+
 ### 5. Acesse o Airflow
 
 Abra [http://localhost:8080](http://localhost:8080) e:
@@ -104,7 +134,7 @@ Abra [http://localhost:8080](http://localhost:8080) e:
 - Inicie a DAG `financial_data_initialization` para carregar os dados iniciais
 - Ative a DAG `daily_financial_data_update` para atualização incremental diária
 
-  ![airflow](https://github.com/user-attachments/assets/a09b742d-d560-4985-9ad6-8c50a732eeb5)
+![airflow](https://github.com/user-attachments/assets/a09b742d-d560-4985-9ad6-8c50a732eeb5)
 
 ---
 
@@ -165,11 +195,12 @@ Este projeto foi desenvolvido como solução para o teste técnico **Calculadora
 
 ---
 
-
 ## 🔎 Fontes de Dados Utilizadas
 
 - [SGS - Sistema Gerenciador de Séries Temporais (Banco Central do Brasil)](https://www3.bcb.gov.br/sgspub/localizarseries/localizarSeries.do?method=prepararTelaLocalizarSeries)
 - [Yahoo Finance API](https://finance.yahoo.com/)
+
+---
 
 ## ⚙️ CI/CD com GitHub Actions
 
@@ -182,8 +213,9 @@ Este projeto possui integração contínua com:
 
 As ações são executadas automaticamente a cada push, garantindo qualidade, segurança e confiabilidade no deploy.
 
-## 📈 Sobre o Streamlit
+---
 
+## 📈 Sobre o Streamlit
 
 A interface permite:
 
