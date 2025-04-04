@@ -6,8 +6,8 @@ Projeto técnico completo com ETL, banco de dados, API e interface web com deplo
 
 ## 🔁 Processo ETL
 
-```mermaid;
-flowchart TD
+```mermaid
+flowchart TD;
     style A fill:#FFD700,stroke:#000000,stroke-width:2px;
     style B fill:#87CEEB,stroke:#000000,stroke-width:2px;
     style C fill:#FF6347,stroke:#000000,stroke-width:2px;
@@ -43,6 +43,10 @@ flowchart TD
 | Backend API  | FastAPI             |
 | Frontend     | Streamlit           |
 | Containerização | Docker + Compose |
+
+---
+
+## Requisitos
 
 - Instale o **Docker**: https://www.docker.com/products/docker-desktop
 - Instale o **Astronomer CLI**: https://docs.astronomer.io/astro/cli/install-cli
