@@ -102,6 +102,9 @@ Abra [http://localhost:8080](http://localhost:8080) e:
 - Inicie a DAG `financial_data_initialization` para carregar os dados iniciais
 - Ative a DAG `daily_financial_data_update` para atualização incremental diária
 
+  ![airflow](https://github.com/user-attachments/assets/a09b742d-d560-4985-9ad6-8c50a732eeb5)
+
+
 ---
 
 ## 🧱 Estrutura do Projeto
